@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @comment = Comment.new(micropost_id: params[:micropost_id])
   end
 
   # GET /comments/1/edit
