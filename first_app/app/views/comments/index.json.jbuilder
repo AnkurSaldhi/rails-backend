@@ -1,4 +1,4 @@
 json.array!(@comments) do |comment|
-  json.extract! comment, :id, :body, :user_id, :micromicropost_id
+  json.extract! comment, :id, :body, :user_id, :micropost_id
   json.url comment_url(comment, format: :json)
 end

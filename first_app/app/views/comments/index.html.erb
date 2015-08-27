@@ -17,10 +17,10 @@
       <tr>
         <td><%= comment.body %></td>
         <td><%= comment.user_id %></td>
-        <td><%= comment.micromicropost_id %></td>
-        <td><%= link_to 'Show', comment %></td>
-        <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-        <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= comment.micropost_id %></td>
+        <td><%= link_to 'Show', [comment.micropost, comment] %></td>
+        <td><%= link_to 'Edit', edit_micropost_comment_path(comment.micropost, comment) %></td>
+        <td><%= link_to 'Destroy', [comment.micropost, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Comment', new_comment_path %>
+<%= link_to 'New Comment', new_micropost_comment_path %>

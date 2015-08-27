@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @micropost = Micropost.find(params[:micropost_id])
+    @comments = @micropost.comments.all
   end
 
   # GET /comments/1
@@ -41,9 +42,10 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
+    @micropost = Micropost.find(params[:micropost_id])
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @micropost, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -55,9 +57,11 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy
+    @micropost = Micropost.find(params[:micropost_id])
+    @comment = Comment.find(params[:id])
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to @micropost, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +74,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:body, :user_id, :micromicropost_id)
+      params.require(:comment).permit(:body, :user_id, :micropost_id)
     end
 end
