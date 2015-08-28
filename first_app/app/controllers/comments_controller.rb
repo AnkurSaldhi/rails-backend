@@ -1,3 +1,4 @@
+require 'byebug'
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
@@ -15,7 +16,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new(micropost_id: params[:micropost_id])
+    @comment = Comment.new
   end
 
   # GET /comments/1/edit
@@ -25,8 +26,8 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @micropost = Micropost.find(params[:micropost_id])
-    @comment = @micropost.comments.create(comment_params)
+    @comment = Comment.create(comment_params)
+    @micropost = Micropost.find(params[:comment][:micropost_id])
 
     respond_to do |format|
       if @comment.save
