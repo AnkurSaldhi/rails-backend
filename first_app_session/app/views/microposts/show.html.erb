@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @micropost.content %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @micropost.user_id %>
+</p>
+
+
+<h2>Comments</h2>
+<% @micropost.comments.each do |comment| %>
+    <p>
+      <strong>User:</strong>
+      <%= comment.user_id %>
+    </p>
+
+    <p>
+      <strong>Comment:</strong>
+      <%= comment.body %>
+    </p>
+<% end %>
+
+
+<h2>Add a comment:</h2>
+<%= form_for([@micropost, @micropost.comments.build]) do |f| %>
+    <div>
+      <%= f.label :body %><br>
+      <%= f.text_field :body %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :micropost_id %><br>
+      <%= f.number_field :micropost_id %>
+    </div>
+  
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>
+
+
+<%= link_to 'Edit', edit_micropost_path %> |
+<%= link_to 'Back', microposts_path %>

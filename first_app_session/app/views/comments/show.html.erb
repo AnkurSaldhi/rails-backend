@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @comment.body %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @comment.user_id %>
+</p>
+
+<p>
+  <strong>Post:</strong>
+  <%= @comment.micropost_id %>
+</p>
+
+<%= link_to 'Edit', edit_micropost_comment_path(@comment.micropost, @comment) %> |
+<%= link_to 'Back', micropost_comments_path %>
