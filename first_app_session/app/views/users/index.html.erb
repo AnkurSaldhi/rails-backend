@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<div align=right> <%= link_to 'Sign out', destroy_user_session_path, :class => "btn btn-success", method: :delete%></div>
+
 <h1>Listing Users</h1>
 
 <table class="table table-striped">
@@ -22,9 +24,6 @@
   </tbody>
 </table>
 <br>
-
-<li> <%= link_to 'Sign out', destroy_user_session_path, :class => "btn btn-success", method: :delete%></li>
-
 
 
 <% if false %>

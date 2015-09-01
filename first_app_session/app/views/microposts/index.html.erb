@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<div align=right> <%= link_to 'Sign out', destroy_user_session_path, :class => "btn btn-success", method: :delete%></div>
 <h1>Listing Microposts</h1>
 
 <table class="table">
@@ -18,7 +19,14 @@
         <td><%= micropost.user_id %></td>
         <td><%= link_to 'Show', micropost %></td>
         <td><%= link_to 'Edit', edit_micropost_path(micropost) %></td>
-        <td><%= link_to 'Like', likes_path(:micropost_id => micropost), method: :post %></td>
+
+        <% if micropost.likes.where(:user_id => current_user.id).count > 0 %> 
+          <td><%= link_to 'Unlike', like_path(micropost.likes.first.id,:destroy => true), method: :delete,  data: { confirm: 'Are you sure?' }  %></td>
+        <% else %>
+          <td><%= link_to 'Like', likes_path(:micropost_id => micropost), method: :post %></td>
+        <% end %>
+
+
         <td><%= micropost.likes.count %></td>
         <td><%= link_to 'Destroy', micropost, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

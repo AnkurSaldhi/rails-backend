@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
 <div class="text-­warning">
-	<p>
-	  <strong>email:</strong>
-	  <%= @user.email %>
-	</p>
+	<h2>
+	  <code>email:</code>
+	  <mark><%= @user.email %></mark>
+	</h2>
 </div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Edit', edit_user_path(@user), :class=> "btn btn-lg" %> |
+<%= link_to 'Back', users_path, :class=> "btn btn-lg" %>

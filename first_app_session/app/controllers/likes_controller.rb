@@ -62,7 +62,7 @@ class LikesController < ApplicationController
     #debugger
     @like.destroy
     respond_to do |format|
-      format.html { redirect_to likes_url, notice: 'Like was successfully destroyed.' }
+      format.html { redirect_to microposts_path, notice: 'Like was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

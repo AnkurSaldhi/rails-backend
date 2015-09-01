@@ -1,3 +1,4 @@
+require 'byebug'
 class MicropostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
@@ -25,7 +26,7 @@ class MicropostsController < ApplicationController
   # POST /microposts
   # POST /microposts.json
   def create
-    @micropost = Micropost.new(micropost_params)
+    @micropost = Micropost.new(:content => params[:micropost][:content], :user_id => current_user.id)
 
     respond_to do |format|
       if @micropost.save
