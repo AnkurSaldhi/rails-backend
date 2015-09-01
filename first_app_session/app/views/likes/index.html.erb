@@ -2,7 +2,7 @@
 
 <h1>Listing Likes</h1>
 
-<table>
+<table class=table>
   <thead>
     <tr>
       <th>User</th>
@@ -17,7 +17,7 @@
         <td><%= like.user_id %></td>
         <td><%= like.micropost_id %></td>
         <td><%= link_to 'Show', like %></td>
-        <td><%= link_to 'Edit', edit_like_path(like) %></td>
+
         <td><%= link_to 'Destroy', like, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

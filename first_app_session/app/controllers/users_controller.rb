@@ -24,6 +24,11 @@ class UsersController < ApplicationController
   def edit
   end
 
+
+  def show_user_posts
+    @microposts = Micropost.all.where(:user_id => current_user.id)
+  end
+
   # POST /users
   # POST /users.json
   def create

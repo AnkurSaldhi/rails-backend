@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
   resources :users
 
+  get 'showposts' => 'users#show_user_posts'
   root :to => 'microposts#index'
   #root 'users#index'
   #get 'login' => 'likes#index'

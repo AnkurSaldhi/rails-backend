@@ -20,15 +20,17 @@
         <td><%= link_to 'Show', micropost %></td>
         <td><%= link_to 'Edit', edit_micropost_path(micropost) %></td>
 
-        <% if micropost.likes.where(:user_id => current_user.id).count > 0 %> 
-          <td><%= link_to 'Unlike', like_path(micropost.likes.first.id,:destroy => true), method: :delete,  data: { confirm: 'Are you sure?' }  %></td>
+        <% if micropost.likes.where(:user_id => current_user.id).count == 1 %> 
+          <td><%= link_to 'Unlike', like_path(micropost.likes.where(:user_id => current_user.id).first.id,:destroy => true), method: :delete,  data: { confirm: 'Are you sure?' }  %></td>
         <% else %>
           <td><%= link_to 'Like', likes_path(:micropost_id => micropost), method: :post %></td>
         <% end %>
 
 
         <td><%= micropost.likes.count %></td>
+      <% if micropost.user_id == current_user.id %>
         <td><%= link_to 'Destroy', micropost, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
