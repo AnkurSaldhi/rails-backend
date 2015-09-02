@@ -12,7 +12,8 @@
 
 
 <h2>Comments</h2>
-<% @micropost.comments.each do |comment| %>
+<%= will_paginate @comments %>
+<% @comments.each do |comment| %>
     <p>
       <strong>User:</strong>
       <%= comment.user_id %>

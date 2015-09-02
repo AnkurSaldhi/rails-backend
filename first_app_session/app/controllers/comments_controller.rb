@@ -27,7 +27,6 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    debugger
     @comment = Comment.new(:micropost_id => params[:micropost_id], :user_id => current_user.id, \
     :body =>  params[:comment][:body])
 

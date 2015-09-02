@@ -6,12 +6,13 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-    @microposts = Micropost.all
+    @microposts = Micropost.paginate(:page => params[:page])
   end
 
   # GET /microposts/1
   # GET /microposts/1.json
   def show
+    @comments = Micropost.all.find(params[:id]).comments.paginate(:page => params[:page])
   end
 
   # GET /microposts/new

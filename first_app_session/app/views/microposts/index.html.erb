@@ -13,6 +13,7 @@
   </thead>
 
   <tbody>
+    <%= will_paginate @microposts %>
     <% @microposts.each do |micropost| %>
       <tr>
         <td><%= micropost.content %></td>
