@@ -1,4 +1,3 @@
-require 'byebug'
 class MicropostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]

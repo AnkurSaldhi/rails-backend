@@ -1,6 +1,4 @@
-require 'byebug'
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:signin]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   respond_to :json
 
@@ -8,6 +6,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     #it returns all te users
+
     @users = User.all
     render :json => @users
   end
