@@ -2,11 +2,12 @@ require 'byebug'
 class MicropostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
-
+  #respond_to :json
   # GET /microposts
   # GET /microposts.json
   def index
     @microposts = Micropost.paginate(:page => params[:page])
+    #render :json => @micropost
   end
 
   # GET /microposts/1

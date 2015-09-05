@@ -1,12 +1,15 @@
+require 'byebug'
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:signin]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  respond_to :json
 
   # GET /users
   # GET /users.json
   def index
     #it returns all te users
     @users = User.all
+    render :json => @users
   end
 
   # GET /users/1
@@ -42,6 +45,14 @@ class UsersController < ApplicationController
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def signin
+    @user = User.find_by(email: params[:email])
+    if !@user.nil? && @user.valid_password?(params[:password])
+      sign_in(:user, @user)
+      render json: {response: "Success", user_id: @user.id}, status: :ok
     end
   end
 

@@ -5,9 +5,13 @@ Rails.application.routes.draw do
   resources :microposts do
     resources :comments
   end
-  resources :users
+  resources :users do
+    collection do
+      post 'signin'
+    end
+  end
 
-  get 'showposts' => 'users#show_user_posts'
+  get 'users/:id/showposts' => 'users#show_user_posts', :as => :users_showposts
   root :to => 'microposts#index'
   #root 'users#index'
   #get 'login' => 'likes#index'

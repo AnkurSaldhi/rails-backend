@@ -18,6 +18,7 @@
         <td><%= user.email %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
+
         
       </tr>
     <% end %>
@@ -25,7 +26,7 @@
 </table>
 <br>
 
-
+<%= link_to 'Post by you', users_showposts_path(current_user.id), :controller => "users", :action => "show_user_posts" %>
 <% if false %>
     <%= link_to 'New User', new_user_path %>
 <% end %>
