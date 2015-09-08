@@ -1,20 +1,23 @@
+#require 'byebug'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user! ,only: [:index]
   respond_to :json
 
   # GET /users
   # GET /users.json
   def index
     #it returns all te users
-
     @users = User.all
     render :json => @users
+
   end
 
   # GET /users/1
   # GET /users/1.json
   #before show, set_user function is called
   def show
+    render :json => @user
   end
 
   # GET /users/new
@@ -47,11 +50,15 @@ class UsersController < ApplicationController
     end
   end
 
+
   def signin
     @user = User.find_by(email: params[:email])
     if !@user.nil? && @user.valid_password?(params[:password])
       sign_in(:user, @user)
-      render json: {response: "Success", user_id: @user.id}, status: :ok
+      #debugger
+      render json: {response: "success", user_data: @user}, status: :ok
+    else
+      render json: {response: "failure"}, status: :ok
     end
   end
 
@@ -83,6 +90,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
