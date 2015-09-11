@@ -1,4 +1,4 @@
-require 'byebug'
+#require 'byebug'
 
 class LikesController < ApplicationController
   before_action :authenticate_user!

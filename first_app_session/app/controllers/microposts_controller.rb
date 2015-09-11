@@ -1,4 +1,4 @@
-#require 'byebug'
+require 'byebug'
 class MicropostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
@@ -6,22 +6,33 @@ class MicropostsController < ApplicationController
   # GET /microposts
   # GET /microposts.json
   def index
-   # debugger
-    @microposts = Micropost.paginate(:page => params[:page])
-    #render :json => @micropost
+    #debugger
+    @microposts = Micropost.where(:user_id => params[:user_id])
+    render :json => @microposts
   end
 
   # GET /microposts/1
   # GET /microposts/1.json
   def show
+    #byebug
     @comments = Micropost.all.find(params[:id]).comments.paginate(:page => params[:page])
+
+    #@micropost is defined by set_params method which is before action method
+    render :json => @micropost
   end
+
 
   # GET /microposts/new
   def new
     @micropost = Micropost.new
   end
 
+
+
+  def showposts_byuser_id
+    @microposts = Micropost.where(:user_id => params[:id])
+    render :json => @microposts
+  end
   # GET /microposts/1/edit
   def edit
   end
@@ -29,17 +40,20 @@ class MicropostsController < ApplicationController
   # POST /microposts
   # POST /microposts.json
   def create
+
     @micropost = Micropost.new(:content => params[:micropost][:content], :user_id => current_user.id)
 
-    respond_to do |format|
+    #respond_to do |format|
       if @micropost.save
-        format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
-        format.json { render :show, status: :created, location: @micropost }
+        #format.html { redirect_to @micropost, notice: 'Micropost was successfully created.' }
+        #format.json { render :show, status: :created, location: @micropost }
+        render :json => {response: "success"}
       else
-        format.html { render :new }
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+        #format.html { render :new }
+        #format.json { render json: @micropost.errors, status: :unprocessable_entity }
+        render :json => {response: "failure"}
       end
-    end
+    #end
   end
 
   # PATCH/PUT /microposts/1
@@ -60,10 +74,11 @@ class MicropostsController < ApplicationController
   # DELETE /microposts/1.json
   def destroy
     @micropost.destroy
-    respond_to do |format|
-      format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    #respond_to do |format|
+     # format.html { redirect_to microposts_url, notice: 'Micropost was successfully destroyed.' }
+      #format.json { head :no_content }
+    #end
+    render :json => { :status => "post deleted"}
   end
 
   private

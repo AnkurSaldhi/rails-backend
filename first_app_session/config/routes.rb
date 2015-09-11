@@ -1,17 +1,25 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  get 'users/checkuser' => 'users#check_user'
+
+  devise_for :users,  controllers: { registrations: "mydevisecontroller/registrations" }
   resources :likes
-  resources :microposts do
-    resources :comments
-  end
+  resources :microposts
+  resources :comments
+
+
   resources :users do
     collection do
       post 'signin'
     end
   end
 
+  post 'logout' => 'users#signout'
   get 'users/:id/showposts' => 'users#show_user_posts', :as => :users_showposts
+
+  get 'users/:id/microposts' => 'microposts#showposts_byuser_id'
+
+  get 'users/:id/microposts/:micropost_id/comments' => 'comments#get_comments_for_micropost'
   root :to => 'microposts#index'
   #root 'users#index'
   #get 'login' => 'likes#index'

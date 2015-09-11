@@ -1,4 +1,4 @@
-#require 'byebug'
+require 'byebug'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user! ,only: [:index]
@@ -30,15 +30,31 @@ class UsersController < ApplicationController
   end
 
 
+  def check_user
+    if current_user
+      @user = User.find(current_user)
+      render json: {response: "success", user_data: @user}, status: :ok
+    else
+      render :json => {response:"failure"}
+    end
+  end
+
+
   def show_user_posts
-    @microposts = Micropost.all.where(:user_id => current_user.id)
+    @microposts = Micropost.where(:user_id => current_user.id)
+    @comments = []
+    #byebug
+    @microposts.each { |micropost| @comments.push(micropost.comments)}
+    render :json => { :microposts => @microposts, :comments => @comments }
+    #render :json => @comments
   end
 
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    byebug
 
+    @user = User.new(user_params)
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -50,7 +66,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   def signin
     @user = User.find_by(email: params[:email])
     if !@user.nil? && @user.valid_password?(params[:password])
@@ -61,6 +76,19 @@ class UsersController < ApplicationController
       render json: {response: "failure"}, status: :ok
     end
   end
+
+
+  def signout
+    #byebug
+    @user = User.find(current_user.id)
+    if @user
+      sign_out(@user)
+      render :json => {response: "signout_success"}
+    else
+      render :json => {response: "signout_failure"}
+    end
+  end
+
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json

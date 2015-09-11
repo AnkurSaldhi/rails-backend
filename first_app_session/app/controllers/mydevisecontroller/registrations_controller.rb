@@ -1,4 +1,4 @@
-class Abc::RegistrationsController < Devise::RegistrationsController
+class Mydevisecontroller::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
 
@@ -8,9 +8,26 @@ class Abc::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+   def create
+     super
+     byebug
+     if params[:user][:password]!= params[:user][:confirm_password]
+       render :json => {response: "passwords did not match"}
+     end
+
+     @user = User.new(:email => params[:user][:email],:password => params[:user][:password])
+     #respond_to do |format|
+       if @user.save
+         render :json => {response: "user successfully saved"}
+         #format.html { redirect_to @user, notice: 'User was successfully created.' }
+         #format.json { render :show, status: :created, location: @user }
+       else
+         render :json => {response: "user cannot be saved"}
+         #format.html { render :new }
+         #format.json { render json: @user.errors, status: :unprocessable_entity }
+       #end
+     end
+   end
 
   # GET /resource/edit
   # def edit

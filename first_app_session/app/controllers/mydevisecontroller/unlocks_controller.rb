@@ -1,4 +1,4 @@
-class Abc::UnlocksController < Devise::UnlocksController
+class Mydevisecontroller::UnlocksController < Devise::UnlocksController
   # GET /resource/unlock/new
   # def new
   #   super

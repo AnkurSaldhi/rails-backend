@@ -2,12 +2,13 @@ require 'byebug'
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
+  before_action :get_comments_for_post, only: [:get_comments_for_post]
   # GET /comments
   # GET /comments.json
   def index
     @micropost = Micropost.find(params[:micropost_id])
     @comments = @micropost.comments.all
+    render :json => @comments
   end
 
   # GET /comments/1
@@ -20,6 +21,14 @@ class CommentsController < ApplicationController
     @comment = Comment.new(:micropost_id => params[:micropost_id])
   end
 
+
+
+  def get_comments_for_post
+    render :json => @comments
+  end
+
+
+
   # GET /comments/1/edit
   def edit
   end
@@ -27,19 +36,20 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(:micropost_id => params[:micropost_id], :user_id => current_user.id, \
+    @comment = Comment.new(:micropost_id => params[:comment][:micropost_id], :user_id => current_user.id, \
     :body =>  params[:comment][:body])
 
-    @micropost = Micropost.find(params[:micropost_id])
+    #@micropost = Micropost.find(params[:micropost_id])
 
-    respond_to do |format|
+    #respond_to do |format|
       if @comment.save
-        format.html { redirect_to @micropost, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        render :json => {:response => "comment saved succcessfully"}
+        #format.html { redirect_to @micropost, notice: 'Comment was successfully created.' }
+        #format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+        #format.html { render :new }
+        #format.json { render json: @comment.errors, status: :unprocessable_entity }
+      #end
     end
   end
 
