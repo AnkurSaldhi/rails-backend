@@ -9,20 +9,20 @@ class Mydevisecontroller::RegistrationsController < Devise::RegistrationsControl
 
   # POST /resource
    def create
-     super
-     byebug
+     #super
+     #byebug
      if params[:user][:password]!= params[:user][:confirm_password]
-       render :json => {response: "passwords did not match"}
+       render :json => {response: "passwords did not match"} and return
      end
 
      @user = User.new(:email => params[:user][:email],:password => params[:user][:password])
      #respond_to do |format|
        if @user.save
-         render :json => {response: "user successfully saved"}
+         render :json => {response: "user successfully saved"} and return
          #format.html { redirect_to @user, notice: 'User was successfully created.' }
          #format.json { render :show, status: :created, location: @user }
        else
-         render :json => {response: "user cannot be saved"}
+         render :json => {response: "user cannot be saved"} and return
          #format.html { render :new }
          #format.json { render json: @user.errors, status: :unprocessable_entity }
        #end

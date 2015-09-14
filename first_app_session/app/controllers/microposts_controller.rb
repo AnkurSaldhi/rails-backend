@@ -8,6 +8,10 @@ class MicropostsController < ApplicationController
   def index
     #debugger
     @microposts = Micropost.where(:user_id => params[:user_id])
+    #@likes_count = []
+    #byebug
+    #@microposts.each { |post| @likes_count.push(post.likes.count)}
+
     render :json => @microposts
   end
 

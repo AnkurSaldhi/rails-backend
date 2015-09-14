@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(:micropost_id => params[:comment][:micropost_id], :user_id => current_user.id, \
+    @comment = Comment.new(:micropost_id => params[:comment][:micropost], :user_id => current_user.id, \
     :body =>  params[:comment][:body])
 
     #@micropost = Micropost.find(params[:micropost_id])

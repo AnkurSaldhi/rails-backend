@@ -1,4 +1,4 @@
-#require 'byebug'
+require 'byebug'
 
 class LikesController < ApplicationController
   before_action :authenticate_user!
@@ -28,16 +28,19 @@ class LikesController < ApplicationController
   # POST /likes
   # POST /likes.json
   def create
-    @like = Like.new(:micropost_id => params[:micropost_id], :user_id => current_user.id)
-    respond_to do |format|
+    #byebug
+    @like = Like.new(:micropost_id => params[:like][:micropost], :user_id => current_user.id)
+    #respond_to do |format|
 
       if @like.save
-        format.html { redirect_to microposts_path, notice: 'You have liked the post.' }
-        format.json { render :show, status: :created, location: @like }
+        render :json => {response: "like saved successfully"}
+        #format.html { redirect_to microposts_path, notice: 'You have liked the post.' }
+        #format.json { render :show, status: :created, location: @like }
       else
-        format.html { render :new }
-        format.json { render json: @like.errors, status: :unprocessable_entity }
-      end
+        render :json => {response: "like is not saved successfully"}
+        #format.html { render :new }
+        #format.json { render json: @like.errors, status: :unprocessable_entity }
+      #end
     end
   end
 
